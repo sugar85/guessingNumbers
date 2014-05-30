@@ -26,5 +26,5 @@ for i=1:2
 J=downSampling(J);
 end;
 
-X=J(:)';
+X=J'(:)';
 end
