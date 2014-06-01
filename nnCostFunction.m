@@ -2,7 +2,7 @@ function [J grad] = nnCostFunction(nn_params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
-                                   X, y, lambda)
+                                   lambda)
 %NNCOSTFUNCTION Implements the neural network cost function for a two layer
 %neural network which performs classification
 %   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
@@ -21,10 +21,7 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
-
-% Setup some useful variables
-m = size(X, 1);
-         
+     
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -61,6 +58,13 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+
+for k=1:10
+s = strcat('trainingData-',int2str(k),'.mat');
+load(s);
+% Setup some useful variables
+m = size(X, 1);
+
 X = [ones(m,1),X];
 z2 = X * Theta1';
 a = sigmoid(z2);
@@ -72,21 +76,17 @@ temp(i,y(i)) = 1;
 end; 
 theta1_no_bias = Theta1(:,2:size(Theta1,2));
 theta2_no_bias = Theta2(:,2:size(Theta2,2));
-J =  -1/m * sum(sum(temp .* log(h) + (1-temp) .* log(1 - h),2)) + lambda/(2*m)*(sum(sum(theta1_no_bias .* theta1_no_bias)) + sum(sum(theta2_no_bias .* theta2_no_bias)));
+J +=  -1/m * sum(sum(temp .* log(h) + (1-temp) .* log(1 - h),2)) + lambda/(2*m)*(sum(sum(theta1_no_bias .* theta1_no_bias)) + sum(sum(theta2_no_bias .* theta2_no_bias)));
 delta3 = h - temp;
 delta2 = (delta3 * theta2_no_bias) .* sigmoidGradient(z2);
 
-Theta2_grad = 1/m * (delta3' * a) + lambda/m * [zeros(num_labels,1),theta2_no_bias];
-Theta1_grad = 1/m * (delta2' * X) + lambda/m * [zeros(hidden_layer_size,1),theta1_no_bias];
+Theta2_grad += 1/m * (delta3' * a) + lambda/m * [zeros(num_labels,1),theta2_no_bias];
+Theta1_grad += 1/m * (delta2' * X) + lambda/m * [zeros(hidden_layer_size,1),theta1_no_bias];
 
-
-
-
-
-
-
-
-
+end;
+J *= 1/10;
+Theta1_grad *= 1/10;
+Theta2_grad *= 1/10;
 
 % -------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 function [lambda_vec, error_train, error_val] = ...
-    validationCurve(X, y, Xval, yval, initial_nn_params,hidden_units)
+    validationCurve(initial_nn_params,hidden_units,input_layers)
 %VALIDATIONCURVE Generate the train and validation errors needed to
 %plot a validation curve that we can use to select lambda
 %   [lambda_vec, error_train, error_val] = ...
@@ -40,26 +40,31 @@ error_val = zeros(length(lambda_vec), 1);
 %
 
 % Create "short hand" for the cost function to be minimized
-input_layers = size(X, 2);
+
 lambda = 0;
 options = optimset('MaxIter', 50);
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layers, ...
                                    hidden_units, ...
-                                   10, X, y, lambda);
+                                   10, lambda);
+%load('crossValidationData.mat');								   
 								   
 for i=1:length(lambda_vec)
 lambda = lambda_vec(i);
+nn_params = initial_nn_params;
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
-[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
-%theta = trainLinearReg(X,y,lambda);
-error_train(i) = nnCostFunction(nn_params, input_layer_size, hidden_units, 10, X, y, 0);
-error_val(i) = nnCostFunction(nn_params, input_layer_size, hidden_units, 10, Xval, yval, 0);
+[nn_params, cost] = fmincg(costFunction, nn_params, options);
+
+error_train(i) = cost;
+%error_val(i) = cost(Xval,yval, nn_params,	lambda, input_layers, hidden_units);
+
+fprintf('lambda = %d. Program paused. Press enter to continue.\n',lambda);
+pause;
+s = strcat('thetaForLambda-',num2str(lambda),'.mat');
+save(s,"nn_params");
 end;
-
-
 
 % =========================================================================
 
