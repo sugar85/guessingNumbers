@@ -14,7 +14,7 @@ lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10]';
 
 % You need to return these variables correctly.
 error_train = zeros(length(lambda_vec), 1);
-error_val = zeros(length(lambda_vec), 1);
+%error_val = zeros(length(lambda_vec), 1);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return training errors in 
@@ -47,23 +47,31 @@ costFunction = @(p) nnCostFunction(p, ...
                                    input_layers, ...
                                    hidden_units, ...
                                    10, lambda);
+
 %load('crossValidationData.mat');								   
 								   
-for i=1:length(lambda_vec)
+for i=2:length(lambda_vec)
 lambda = lambda_vec(i);
+
 nn_params = initial_nn_params;
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
 
-[nn_params, cost] = fmincg(costFunction, nn_params, options);
+[nn_params, costJ] = fmincg(costFunction, nn_params, options);
 
-error_train(i) = cost;
+%error_train(i) = costJ;
 %error_val(i) = cost(Xval,yval, nn_params,	lambda, input_layers, hidden_units);
 
-fprintf('lambda = %d. Program paused. Press enter to continue.\n',lambda);
-pause;
-s = strcat('thetaForLambda-',num2str(lambda),'.mat');
-save(s,"nn_params");
+fprintf('lambda = %f. Program paused. Press enter to continue.\n',lambda);
+
+Theta1 = reshape(nn_params(1:hidden_units * (input_layers + 1)), ...
+                 hidden_units, (input_layers + 1));
+
+Theta2 = reshape(nn_params((1 + (hidden_units * (input_layers + 1))):end), ...
+                 10, (hidden_units + 1));
+				 
+s = strcat('trainedWeight-',num2str(lambda),'.mat');
+save(s,"Theta1","Theta2");
 end;
 
 % =========================================================================
