@@ -50,7 +50,7 @@ costFunction = @(p) nnCostFunction(p, ...
 
 %load('crossValidationData.mat');								   
 								   
-for i=2:length(lambda_vec)
+for i=7:length(lambda_vec)
 lambda = lambda_vec(i);
 
 nn_params = initial_nn_params;
