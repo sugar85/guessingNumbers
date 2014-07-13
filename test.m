@@ -1,4 +1,4 @@
-load('trainedWeight-0.1.mat');
+load('trainedWeight-0.01.mat');
 
 X = processingImage('testData/0.bmp');
 X = [X;processingImage('testData/1.bmp')];

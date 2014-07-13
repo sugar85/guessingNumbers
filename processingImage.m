@@ -1,17 +1,26 @@
 function X = processingImage(s)
 I = im2double(255 - rgb2gray(imread(s)));
 [m n]=size(I);
-J=I;
-while m>112 || n>112
-[i j] = find(J);
+[i j] = find(I);
 rMin=min(i);
 cMin=min(j);
 rMax=max(i);
 cMax=max(j);
-J=J(rMin:rMax,cMin:cMax);
-J=downSampling(J);
+J=I(rMin:rMax,cMin:cMax);
+[k h] = size(J);
+if (mod(k,2)==1) 
+J = [J;zeros(1,h)];
+end;
+[k h] = size(J);
+if (mod(h,2)==1) 
+J = [J zeros(k,1)];
+end;
+
+while m>112 || n>112
+J=downSampling1(J);
 [m n]=size(J);
 end;
+
 add_rows=112-m;
 add_cols=112-n;
 
@@ -24,7 +33,7 @@ add_end_col=add_cols - add_begin_col;
 J = [zeros(112,add_begin_col) J zeros(112,add_end_col)];
 
 for i=1:2
-J=downSampling(J);
+J=downSampling1(J);
 end;
 
 X=J'(:)';
