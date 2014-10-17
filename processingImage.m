@@ -2,13 +2,15 @@ function X = processingImage(s)
 I = im2double(255 - rgb2gray(imread(s)));
 [m n]=size(I);
 J=I;
-while m>112 || n>112
 [i j] = find(J);
 rMin=min(i);
 cMin=min(j);
 rMax=max(i);
 cMax=max(j);
 J=J(rMin:rMax,cMin:cMax);
+[m n]=size(J);
+
+while m>112 || n>112
 J=downSampling(J);
 [m n]=size(J);
 end;
