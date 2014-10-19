@@ -4,7 +4,7 @@ for (i=1:m)
 		j=m;
 		no_plus = m+1;
 		while(j>1)
-			if ((X(i,j-1)==X(i,j)) && (j!=no_plus))
+			if ((X(i,j-1)==X(i,j)) && (j!=no_plus) && X(i,j)!=0)
 				X(i,j) = X(i,j) + X(i,j-1);
 				X(i,j-1) = 0;
 				no_plus = j;
@@ -23,7 +23,7 @@ for (i=1:m)
 		j=1;
 		no_plus=0;
 		while(j<m)
-			if ((X(i,j)==X(i,j+1)) && (j!=no_plus))
+			if ((X(i,j)==X(i,j+1)) && (j!=no_plus) && X(i,j)!=0)
 				X(i,j) = X(i,j) + X(i,j+1);
 				X(i,j+1) = 0;
 				no_plus = j;
