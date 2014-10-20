@@ -5,9 +5,10 @@ found=0;
 while(index <= size(begin,1) && found==0)
 	j = begin(index);
 	var = template{j,1};
-	if(size(find(strcmp(temp,var)==1)) == 0)
+	inver_var = [X{j,2},'+',X{j,1}];
+	if(size(find(strcmp(temp,var)==1)) == 0 && size(find(strcmp(temp,inver_var)==1)) == 0)
 		r = [r;result(j)];
-		temp = [temp;var];
+		temp = [temp;{var}];
 		next = X{j,2};
 		found = strcmp(next,b);
 		if(found == 0)
