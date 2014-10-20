@@ -1,5 +1,6 @@
-f = fopen('input.txt');
-fo = fopen('output.txt', 'w');
+%f = fopen('input.txt');
+f = fopen('C-small-practice.in');
+fo = fopen('output-small.txt', 'w');
 cases = str2num(fgetl(f));
 for(case_number = 1:cases)
 	m=str2num(fgetl(f));
@@ -8,19 +9,24 @@ for(case_number = 1:cases)
 	X=cell();
 	for(i=1:m)
 		s = strsplit(fgetl(f),'=');
-		results = [results;str2num(s{1,2})];
 		variables = s{1,1};
-		split = strsplit(variables,'+');
-		template=[template;{variables}];
-		X=[X;split];	
-		if(strcmp(split{1,1},split{1,2}) == 0)
-			inver_split = {split{1,2},split{1,1}};
-			inver_template = [split{1,2},'+',split{1,1}];
-			template=[template;{inver_template}];
-			X=[X;inver_split];
+		if(size(find(strcmp(template,variables)),1) == 0)
+			split = strsplit(variables,'+');
+			template=[template;{variables}];
 			results = [results;str2num(s{1,2})];
+			X=[X;split];	
+			if(strcmp(split{1,1},split{1,2}) == 0)
+				inver_split = {split{1,2},split{1,1}};
+				inver_template = [split{1,2},'+',split{1,1}];
+				template=[template;{inver_template}];
+				X=[X;inver_split];
+				results = [results;str2num(s{1,2})];
+			end;
 		end;
 	end;
+	template
+	results
+	pause;
 	q=str2num(fgetl(f));
 	fprintf(fo,'Case #%d:\n',case_number);
 	calculated = cell();
@@ -36,8 +42,8 @@ for(case_number = 1:cases)
 			vars=strsplit(s,'+');
 			[found, temp, r]=addition(X,template,results,vars{1,1},vars{1,2},m,cell(),[]);
 			temp
+			s
 			r
-			vars
 			pause;
 			if(found == 1 && mod(size(r,1),2)==1)
 				result = 0;
