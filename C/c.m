@@ -24,9 +24,6 @@ for(case_number = 1:cases)
 			end;
 		end;
 	end;
-	template
-	results
-	pause;
 	q=str2num(fgetl(f));
 	fprintf(fo,'Case #%d:\n',case_number);
 	calculated = cell();
@@ -41,10 +38,6 @@ for(case_number = 1:cases)
 		else
 			vars=strsplit(s,'+');
 			[found, temp, r]=addition(X,template,results,vars{1,1},vars{1,2},m,cell(),[]);
-			temp
-			s
-			r
-			pause;
 			if(found == 1 && mod(size(r,1),2)==1)
 				result = 0;
 				for(j=1:size(r,1))
