@@ -1,6 +1,6 @@
 %f = fopen('input.txt');
-f = fopen('C-small-practice.in');
-fo = fopen('output-small.txt', 'w');
+f = fopen('C-large-practice.in');
+fo = fopen('output-large.txt', 'w');
 cases = str2num(fgetl(f));
 for(case_number = 1:cases)
 	m=str2num(fgetl(f));
@@ -84,6 +84,13 @@ for(case_number = 1:cases)
 						end;				
 					end;
 					calculated_op=[s,'=',num2str(result)];
+					r1 = x.(vars{1,1});
+					r1.(vars{1,2}) = result;
+					x.(vars{1,1}) = r1;
+					
+					r2 = x.(vars{1,2});
+					r2.(vars{1,1}) = result;
+					x.(vars{1,2}) = r2;					
 				end;
 			end;
 		end;
