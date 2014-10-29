@@ -1,6 +1,6 @@
 %f = fopen('input.txt');
-f = fopen('C-large-practice.in');
-fo = fopen('output-large.txt', 'w');
+f = fopen('C-small-practice.in');
+fo = fopen('output-small.txt', 'w');
 cases = str2num(fgetl(f));
 for(case_number = 1:cases)
 	m=str2num(fgetl(f));
@@ -18,24 +18,24 @@ for(case_number = 1:cases)
 			else
 				r=struct();
 			end;
-			setfield(r,vars{1,2},res);
-			setfield(x,vars{1,1},r);
+			r=setfield(r,vars{1,2},res);
+			x=setfield(x,vars{1,1},r);
 		else
 			if(isfield(x,vars{1,1}))
 				r = x.(vars{1,1});
 			else
 				r=struct();
 			end;
-			setfield(r,vars{1,2},res);
-			setfield(x,vars{1,1},r);
+			r=setfield(r,vars{1,2},res);
+			x=setfield(x,vars{1,1},r);
 		
 			if(isfield(x,vars{1,2}))
 				r = x.(vars{1,2});
 			else
 				r=struct();
 			end;
-			setfield(r,vars{1,1},res);
-			setfield(x,vars{1,2},r);
+			r=setfield(r,vars{1,1},res);
+			x=setfield(x,vars{1,2},r);
 		end;
 	end;
 
@@ -47,7 +47,7 @@ for(case_number = 1:cases)
 			res = (x.(a).(a) + x.(b).(b))/2;
 			
 			r = x.(a);
-			setfield(r,b,res);
+			r=setfield(r,b,res);
 			x.(a)=r;
 			
 			r1 = x.(b);
