@@ -73,7 +73,7 @@ for(case_number = 1:cases)
 				result=r.(vars{1,2});
 				calculated_op=[s,'=',num2str(result)];
 			else
-				[found, r]=addition(x,vars{1,1},vars{1,2},';',[]);
+				[found, r]=addition(x,vars{1,1},vars{1,2},[';',vars{1,1},';'],[]);
 				if(found == 1 && mod(size(r,1),2)==1)
 					result = 0;
 					for(j=1:size(r,1))

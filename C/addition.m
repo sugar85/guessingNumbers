@@ -2,7 +2,8 @@ function [found,rs] = addition(x,a,b,temp,r)
 found = 0;
 rs=[];
 for([val, key] = x.(a))
-	if(size(strfind(temp,[';',a,';',key,';']),1) == 0 && size(strfind(temp,[';',key,';',a,';']),1) == 0)
+	double = strcmp(a,key);
+	if((double==1 && size(strfind(temp,[';',a,';',key,';']),1) == 0) || (double == 0 && size(strfind(temp,[';',key,';']),1) == 0))
 		if(strcmp(b,key) == 1)
 			if(mod(size(r,1),2)==0)
 				found = 1;

@@ -1,6 +1,7 @@
+pkg load image;
 load('trainedWeight-0.01.mat');
 
-X = processingImage('testData/0.bmp');
+X = processingImage('testData/zero.bmp');
 X = [X;processingImage('testData/1.bmp')];
 X = [X;processingImage('testData/2.bmp')];
 X = [X;processingImage('testData/3.bmp')];
