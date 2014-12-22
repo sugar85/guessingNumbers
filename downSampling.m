@@ -16,8 +16,9 @@ end;
 min = min(min(J));
 max = max(max(J));
 for i=1:m
-		for j=1:n
-			J(i,j) = (J(i,j) - min)/(max - min);
-		end;
+	for j=1:n
+		% normalize
+		J(i,j) = (J(i,j) - min)/(max - min); 
 	end;
+end;
 end
