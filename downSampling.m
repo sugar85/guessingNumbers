@@ -18,7 +18,12 @@ max = max(max(J));
 for i=1:m
 	for j=1:n
 		% normalize
-		J(i,j) = (J(i,j) - min)/(max - min); 
+		J(i,j) = (J(i,j) - min)/(max - min);
+		%if(J(i,j)>=0.1 && J(i,j)<0.5)
+		%	J(i,j) = J(i,j) + 0.5;
+		%elseif (J(i,j) < 0.1)
+		%	J(i,j) = 0;
+		%end;
 	end;
 end;
 end

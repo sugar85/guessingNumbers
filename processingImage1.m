@@ -1,5 +1,9 @@
 function X = processingImage1(s)
-I = im2double(255 - rgb2gray(imread(s)));
+I = imread(s);
+if(isrgb(I))
+	I = rgb2gray(I);
+end;
+I = im2double(255 - I);
 
 [i j] = find(I);
 rMin=min(i);
